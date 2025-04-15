@@ -7,13 +7,13 @@ const counterReducer = (state = { counter: 0 }, action) => {
     return {
       counter: state.counter + 1,
     };
+  }
     if (action.type === "decrement") {
       return {
         counter: state.counter - 1,
       };
     }
     return state;
-  }
 };
 //1.2 declare the store
 //1.3 createStore points the reducer function as the parameter

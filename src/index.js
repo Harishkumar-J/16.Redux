@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import store from './store';
 import './index.css';
 import App from './App';
-import { Provider } from 'react-redux';
 
 //1.2 provider
 //1.4 store prop
