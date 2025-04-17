@@ -115,7 +115,7 @@ const initialState = {
 
 //4.3 slice contains the global state with which we can multiple states
 // 1)every slice have name as identity
-// 2) initial state
+// 2) state
 // 3) reducers - object wchich contains the action methods
 const counterSlice = createSlice({
   name: "counter",
@@ -128,7 +128,7 @@ const counterSlice = createSlice({
       state.counter--;
     },
     increaseByValue(state, action) {
-      state.counter = state.counter + action.value;
+      state.counter = state.counter + action.payload; // payload is passed from other component
     },
     toggle(state) {
       state.showCounter = !state.showCounter;
@@ -142,5 +142,9 @@ const counterSlice = createSlice({
 const store = configureStore({
   reducer: counterSlice.reducer,
 });
+
+// 5.1 to dispatch the actions from other components we need to export the reducer actions
+export const counterActions = counterSlice.actions;
+
 
 export default store;

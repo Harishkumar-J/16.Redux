@@ -82,37 +82,84 @@
 
 //2----------------------------------------------------------------------------
 
-//3.1 multiple states from store
+// //3.1 multiple states from store
+
+// import classes from "./Counter.module.css";
+
+// import { useSelector, useDispatch} from "react-redux";
+
+// const Counter = () => {
+//   const counter = useSelector(state => state.counter);
+//   //3.2
+//   const showCounter = useSelector(state=> state.showCounter)
+
+//   const dispatch = useDispatch()
+
+//   const toggleCounterHandler = () => {
+//     dispatch({type: 'toggle'})
+//   };
+
+//   const incrementHandler =()=>{
+//     dispatch({type:'increment'})
+//   }
+//   const decrementHandler =()=>{
+//     dispatch({type:'decrement'})
+//   }
+//   const increaseHandler= ()=>{
+//     dispatch({type:'increase-by-value', value: 5})
+//   }
+
+//   return (
+//     <main className={classes.counter}>
+//       <h1>Redux Counter</h1>
+//       {/* 3.3  */}
+//       {showCounter && <div className={classes.value}>{counter}</div>}
+//       <div>
+//       <button onClick={incrementHandler}>Increment</button>
+//       <button onClick={decrementHandler}>Decrement</button>
+//       <button onClick={increaseHandler}>Increase by 5</button>
+//       </div>
+//       <button onClick={toggleCounterHandler}>Toggle Counter</button>
+//     </main>
+//   );
+// };
+
+// export default Counter;
+
+//3-------------------------------------------------------------------------------
+
+//4.1 using the reduxtoolkit - dispatching the actions
+//4.2 importing the counterActions
+import { counterActions } from "../store/index";
 
 import classes from "./Counter.module.css";
-
 import { useSelector, useDispatch} from "react-redux";
 
 const Counter = () => {
   const counter = useSelector(state => state.counter);
-  //3.2
   const showCounter = useSelector(state=> state.showCounter)
 
   const dispatch = useDispatch()
 
-  const toggleCounterHandler = () => {
-    dispatch({type: 'toggle'})
-  };
-
+  //4.3 
   const incrementHandler =()=>{
-    dispatch({type:'increment'})
+    // dispatch({type:'increment'})
+    dispatch(counterActions.increment())
   }
   const decrementHandler =()=>{
-    dispatch({type:'decrement'})
+    dispatch(counterActions.decrement())
   }
   const increaseHandler= ()=>{
-    dispatch({type:'increase-by-value', value: 5})
+    dispatch(counterActions.increaseByValue(5)) //{type: SOME_UNIQ_ID , payload : 5} - default reduxtoolkit
   }
+  const toggleCounterHandler = () => {
+    dispatch(counterActions.toggle())
+
+  };
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      {/* 3.3  */}
       {showCounter && <div className={classes.value}>{counter}</div>}
       <div>
       <button onClick={incrementHandler}>Increment</button>
