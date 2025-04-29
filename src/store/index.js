@@ -146,68 +146,86 @@
 // // 5.1 to dispatch the actions from other components we need to export the reducer actions
 // export const counterActions = counterSlice.actions;
 
-
 // export default store;
 
 //4------------------------------------------------------------------------------
 
-//5.1 multiple states/ slices - adding auth slice
+// //5.1 multiple states/ slices - adding auth slice
 
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+// import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const initialState = {
-  counter: 0,
-  showCounter: true,
-};
+// const initialState = {
+//   counter: 0,
+//   showCounter: true,
+// };
 
-//5.3 initial state for auth
-const initialAuthState = {
-  isAuthenticated: false
-}
+// //5.3 initial state for auth
+// const initialAuthState = {
+//   isAuthenticated: false
+// }
 
-const counterSlice = createSlice({
-  name: "counter",
-  initialState, // this points the above declared state
-  reducers: {
-    increment(state) {
-      state.counter++; // redux toolkit clone the state and updates immutable way by internal package - imgur
-    },
-    decrement(state) {
-      state.counter--;
-    },
-    increaseByValue(state, action) {
-      state.counter = state.counter + action.payload; // payload is passed from other component
-    },
-    toggle(state) {
-      state.showCounter = !state.showCounter;
-    },
-  },
-});
+// const counterSlice = createSlice({
+//   name: "counter",
+//   initialState, // this points the above declared state
+//   reducers: {
+//     increment(state) {
+//       state.counter++; // redux toolkit clone the state and updates immutable way by internal package - imgur
+//     },
+//     decrement(state) {
+//       state.counter--;
+//     },
+//     increaseByValue(state, action) {
+//       state.counter = state.counter + action.payload; // payload is passed from other component
+//     },
+//     toggle(state) {
+//       state.showCounter = !state.showCounter;
+//     },
+//   },
+// });
 
-//5.2 authSlice
+// //5.2 authSlice
 
-const authSlice = createSlice({
-  name: 'authentication',
-  initialState: initialAuthState,
-  reducers: {
-    login(state){
-      state.isAuthenticated = true
-    },
-    logout(state){
-      state.isAuthenticated = false
-    }
-  }
-})
+// const authSlice = createSlice({
+//   name: 'authentication',
+//   initialState: initialAuthState,
+//   reducers: {
+//     login(state){
+//       state.isAuthenticated = true
+//     },
+//     logout(state){
+//       state.isAuthenticated = false
+//     }
+//   }
+// })
 
-//5.4 add authSlice to the store [Multiple slices]
+// //5.4 add authSlice to the store [Multiple slices]
+
+// const store = configureStore({
+
+//   reducer: {counter:counterSlice.reducer, auth:authSlice.reducer}
+// });
+
+// export const counterActions = counterSlice.actions;
+// //5.5 exporting the auth actions
+// export const authActions = authSlice.actions;
+
+// export default store;
+
+//5----------------------------------------------------------------------------------
+
+//6 splitting the slices into diff files
+
+import { configureStore } from "@reduxjs/toolkit";
+
+// 6.1 importing the slices
+import counterSlice from "./counter-slice";
+import authSlice from "./auth-slice";
 
 const store = configureStore({
-  
-  reducer: {counter:counterSlice.reducer, auth:authSlice.reducer}
+  reducer: { counter: counterSlice.reducer, auth: authSlice.reducer },
 });
 
 export const counterActions = counterSlice.actions;
-//5.5 exporting the auth actions
 export const authActions = authSlice.actions;
 
 export default store;
