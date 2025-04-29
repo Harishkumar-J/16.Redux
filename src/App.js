@@ -23,17 +23,18 @@ import UserProfile from './components/UserProfile'
 
 // 1.3 to read the data from the store
 import { useSelector } from "react-redux";
+import { Fragment } from "react";
 
 function App() {
- const isAuth = useSelector(state => state.auth.isAuthenticateed)
-
+ const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+ console.log(isAuthenticated)
 
   return (
     <>
       <Header />
       {/* 1.4 */}
-      {!isAuth && <Auth />}
-      {isAuth && <UserProfile/>}
+      {!isAuthenticated && <Auth />}
+      {isAuthenticated && <UserProfile/>}
       <Counter />
     </>
   );
