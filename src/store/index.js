@@ -98,14 +98,61 @@
 
 //3--------------------------------------------------------------------------------
 
-//4.1 using redux toolkit - npm install @reduxjs/toolkit
+// //4.1 using redux toolkit - npm install @reduxjs/toolkit
 
-//4.4 we can get rid of the redux
-// import { createStore } from "redux";
+// //4.4 we can get rid of the redux
+// // import { createStore } from "redux";
 
-//4.5 in place of redux we can use the configureStore which
-// merges multiple reducers to one
-//4.2
+// //4.5 in place of redux we can use the configureStore which
+// // merges multiple reducers to one
+// //4.2
+// import { createSlice, configureStore } from "@reduxjs/toolkit";
+
+// const initialState = {
+//   counter: 0,
+//   showCounter: true,
+// };
+
+// //4.3 slice contains the global state with which we can multiple states
+// // 1)every slice have name as identity
+// // 2) state
+// // 3) reducers - object wchich contains the action methods
+// const counterSlice = createSlice({
+//   name: "counter",
+//   initialState, // this points the above declared state
+//   reducers: {
+//     increment(state) {
+//       state.counter++; // redux toolkit clone the state and updates immutable way by internal package - imgur
+//     },
+//     decrement(state) {
+//       state.counter--;
+//     },
+//     increaseByValue(state, action) {
+//       state.counter = state.counter + action.payload; // payload is passed from other component
+//     },
+//     toggle(state) {
+//       state.showCounter = !state.showCounter;
+//     },
+//   },
+// });
+
+// //4.6 using the configureStore
+// // this contains an object with global reducer which can contain single / multiple
+// // reducers from the number of slices used
+// const store = configureStore({
+//   reducer: counterSlice.reducer,
+// });
+
+// // 5.1 to dispatch the actions from other components we need to export the reducer actions
+// export const counterActions = counterSlice.actions;
+
+
+// export default store;
+
+//4------------------------------------------------------------------------------
+
+//5.1 multiple states/ slices - adding auth slice
+
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -113,10 +160,11 @@ const initialState = {
   showCounter: true,
 };
 
-//4.3 slice contains the global state with which we can multiple states
-// 1)every slice have name as identity
-// 2) state
-// 3) reducers - object wchich contains the action methods
+//5.3 initial state for auth
+const initialAuthState = {
+  isAuthenticated: false
+}
+
 const counterSlice = createSlice({
   name: "counter",
   initialState, // this points the above declared state
@@ -136,15 +184,30 @@ const counterSlice = createSlice({
   },
 });
 
-//4.6 using the configureStore
-// this contains an object with global reducer which can contain single / multiple
-// reducers from the number of slices used
+//5.2 authSlice
+
+const authSlice = createSlice({
+  name: 'authentication',
+  initialState: initialAuthState,
+  reducers: {
+    login(state){
+      state.isAuthenticated = true
+    },
+    logut(state){
+      state.isAuthenticated = false
+    }
+  }
+})
+
+//5.4 add authSlice to the store [Multiple slices]
+
 const store = configureStore({
-  reducer: counterSlice.reducer,
+  
+  reducer: {counter:counterSlice.reducer, auth:authSlice.reducer}
 });
 
-// 5.1 to dispatch the actions from other components we need to export the reducer actions
 export const counterActions = counterSlice.actions;
-
+//5.5 exporting the auth actions
+export const authActions = authSlice.actions;
 
 export default store;

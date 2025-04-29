@@ -128,22 +128,70 @@
 
 //3-------------------------------------------------------------------------------
 
-//4.1 using the reduxtoolkit - dispatching the actions
-//4.2 importing the counterActions
+// //4.1 using the reduxtoolkit - dispatching the actions
+// //4.2 importing the counterActions
+// import { counterActions } from "../store/index";
+
+// import classes from "./Counter.module.css";
+// import { useSelector, useDispatch} from "react-redux";
+
+// const Counter = () => {
+//   const counter = useSelector(state => state.counter);
+//   const showCounter = useSelector(state=> state.showCounter)
+
+//   const dispatch = useDispatch()
+
+//   //4.3 
+//   const incrementHandler =()=>{
+//     // dispatch({type:'increment'})
+//     dispatch(counterActions.increment())
+//   }
+//   const decrementHandler =()=>{
+//     dispatch(counterActions.decrement())
+//   }
+//   const increaseHandler= ()=>{
+//     dispatch(counterActions.increaseByValue(5)) //{type: SOME_UNIQ_ID , payload : 5} - default reduxtoolkit
+//   }
+//   const toggleCounterHandler = () => {
+//     dispatch(counterActions.toggle())
+
+//   };
+
+//   return (
+//     <main className={classes.counter}>
+//       <h1>Redux Counter</h1>
+//       {showCounter && <div className={classes.value}>{counter}</div>}
+//       <div>
+//       <button onClick={incrementHandler}>Increment</button>
+//       <button onClick={decrementHandler}>Decrement</button>
+//       <button onClick={increaseHandler}>Increase by 5</button>
+//       </div>
+//       <button onClick={toggleCounterHandler}>Toggle Counter</button>
+//     </main>
+//   );
+// };
+
+// export default Counter;
+
+//4----------------------------------------------------------------------------------------------------------
+
+
+// 5. multiple states and slices
+
 import { counterActions } from "../store/index";
 
 import classes from "./Counter.module.css";
 import { useSelector, useDispatch} from "react-redux";
 
 const Counter = () => {
-  const counter = useSelector(state => state.counter);
-  const showCounter = useSelector(state=> state.showCounter)
+
+  //5.1 since multiple states like counter and auth are there, we need mention specific states
+  const counter = useSelector(state => state.counter.counter);
+  const showCounter = useSelector(state=> state.counter.showCounter)
 
   const dispatch = useDispatch()
 
-  //4.3 
   const incrementHandler =()=>{
-    // dispatch({type:'increment'})
     dispatch(counterActions.increment())
   }
   const decrementHandler =()=>{
